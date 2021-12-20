@@ -15,8 +15,11 @@ def load_image(name, colorkey=None):
     return image
 
 
+all_sprites = pygame.sprite.Group()
+Dino(all_sprites)
+
 background_width, background_height = SIZE
-background = pygame.transform.smoothscale(pygame.image.load('back.png'), (background_width, background_height))
+background = pygame.transform.smoothscale(pygame.image.load('background.png'), (background_width, background_height))
 
 pos_x = 0  # <<< Позиция старта
 speed = 15  # <<< Скорость движения
@@ -47,6 +50,6 @@ while running:
     screen.blit(background, (coord_image_1, 0))
     screen.blit(background, (coord_image_2, 0))
     pygame.display.flip()
+    all_sprites.draw(screen)
     # >>>
-
 pygame.quit()
