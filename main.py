@@ -16,27 +16,37 @@ def load_image(name, colorkey=None):
 
 
 background_width, background_height = SIZE
-bg = pygame.transform.smoothscale(pygame.image.load('back.png'), (background_width, background_height))
-pos_x = 0
-speed = 10
+background = pygame.transform.smoothscale(pygame.image.load('back.png'), (background_width, background_height))
+
+pos_x = 0  # <<< Позиция старта
+speed = 15  # <<< Скорость движения
+
+start_flag = False  # <<< Флаг старта движения
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
 running = True
-clock = pygame.time.Clock()
+
 while running:
-    clock.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+    # Начало движение (SPACE) <<<
     allKeys = pygame.key.get_pressed()
-    pos_x += speed if allKeys[pygame.K_LEFT] else -speed if allKeys[pygame.K_RIGHT] else 0
+    if allKeys[pygame.K_SPACE]:
+        start_flag = True
 
-    x_rel = pos_x % background_width
-    x_part2 = x_rel - background_width if x_rel > 0 else x_rel + background_width
+    if start_flag:
+        pos_x -= speed
+    # >>>
 
-    screen.blit(bg, (x_rel, 0))
-    screen.blit(bg, (x_part2, 0))
+    #  Движение заднего фона <<<
+    coord_image_1 = pos_x % background_width
+    coord_image_2 = coord_image_1 - background_width if coord_image_1 > 0 else coord_image_1 + background_width
+    screen.blit(background, (coord_image_1, 0))
+    screen.blit(background, (coord_image_2, 0))
     pygame.display.flip()
+    # >>>
+
 pygame.quit()
