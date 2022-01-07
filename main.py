@@ -1,6 +1,10 @@
 import pygame
 import os
 import sys
+import random
+
+from dinozavr import Dino
+from objects import Objects
 
 SIZE = WIDTH, HEIGHT = 1000, 400
 
@@ -17,6 +21,12 @@ def load_image(name, colorkey=None):
 def time_speed_up():  # <<< функция счета секунд
     return int(pygame.time.get_ticks()) // 1000
 
+
+dino_sprite = pygame.sprite.Group()
+Dino(dino_sprite)
+
+objects_sprites = pygame.sprite.Group()
+Objects(objects_sprites)
 
 # <<< background
 background_width, background_height = SIZE
@@ -55,6 +65,10 @@ while running:
     coord_image_2 = coord_image_1 - background_width if coord_image_1 > 0 else coord_image_1 + background_width
     screen.blit(background, (coord_image_1, 0)), screen.blit(background, (coord_image_2, 0))
     # >>>
+    dino_sprite.draw(screen)
+    objects_sprites.draw(screen)
+    if start_flag:
+        objects_sprites.update()
     pygame.display.flip()
 
 pygame.quit()

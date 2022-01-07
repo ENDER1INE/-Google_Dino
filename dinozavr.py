@@ -13,8 +13,8 @@ def load_image(name, colorkey=None):
 
 
 class Dino(pygame.sprite.Sprite):
-    dinosaur = load_image("dinoz.png")
-    dinosaur = pygame.transform.scale(dinosaur, (100, 100))
+    dinosaur = load_image("dino.png")
+    dinosaur = pygame.transform.scale(dinosaur, (120, 100))
 
     def __init__(self, *group):
         super().__init__(*group)
