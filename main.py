@@ -23,7 +23,7 @@ def time_speed_up():  # <<< функция счета секунд
 
 
 dino_sprite = pygame.sprite.Group()
-Dino(dino_sprite)
+Dino(load_image("dino_anim.png"), 5, 2, 20, 270, dino_sprite)
 
 objects_sprites = pygame.sprite.Group()
 Objects(objects_sprites)
@@ -42,6 +42,8 @@ start_flag = False  # <<< Флаг старта движения
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
 running = True
+clock = pygame.time.Clock()
+fps = 30
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -69,6 +71,7 @@ while running:
     objects_sprites.draw(screen)
     if start_flag:
         objects_sprites.update()
+        dino_sprite.update()
     pygame.display.flip()
-
+    clock.tick(fps)
 pygame.quit()

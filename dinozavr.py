@@ -13,30 +13,26 @@ def load_image(name, colorkey=None):
 
 
 class Dino(pygame.sprite.Sprite):
-    dinosaur = load_image("dino.png")
-    dinosaur = pygame.transform.scale(dinosaur, (120, 100))
-
-    def __init__(self, *group):
+    def __init__(self, sheet, columns, rows, x, y, *group):
         super().__init__(*group)
-        self.image = Dino.dinosaur
-        self.rect = self.dinosaur.get_rect()
-        x, y = 300, 250
-        self.rect.x = x
-        self.rect.y = y
-        self.isJump = False
-        self.jumpCount = 10
+        self.frames = []
+        self.cut_sheet(sheet, columns, rows)
+        self.cur_frame = 0
+        self.image = self.frames[self.cur_frame]
+        self.rect = self.rect.move(x, y)
+
+    def cut_sheet(self, sheet, columns, rows):
+        self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
+                                sheet.get_height() // rows)
+        for j in range(rows):
+            for i in range(columns):
+                frame_location = (self.rect.w * i, self.rect.h * j)
+                self.frames.append(sheet.subsurface(pygame.Rect(
+                    frame_location, self.rect.size)))
 
     def update(self):
-        pass
-        # if self.isJump and self.rect.y == 0:
-        #     if self.jumpCount >= -10:
-        #         neg = 1
-        #         if self.jumpCount < 0:
-        #             neg = -1
-        #         self.rect.y -= self.jumpCount ** 2 * 0.1 * neg
-        #         self.jumpCount -= 1
-        #         self.isJump = False
-        #     else:
-        #         self.isJump = False
-        #         self.jumpCount = 10
+        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+        self.image = self.frames[self.cur_frame]
+
+
 
