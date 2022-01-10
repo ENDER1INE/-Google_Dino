@@ -20,6 +20,8 @@ class Dino(pygame.sprite.Sprite):
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
         self.rect = self.rect.move(x, y)
+        self.isJump = False
+        self.jumpCount = 10
 
     def cut_sheet(self, sheet, columns, rows):
         self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
@@ -34,5 +36,14 @@ class Dino(pygame.sprite.Sprite):
         self.cur_frame = (self.cur_frame + 1) % len(self.frames)
         self.image = self.frames[self.cur_frame]
 
-
-
+    def jump(self):
+        if self.isJump:
+            if self.jumpCount >= -10:
+                neg = 1
+                if self.jumpCount < 0:
+                    neg = - 1.2
+                self.rect.y -= self.jumpCount ** 2 * 0.1 * neg
+                self.jumpCount -= 1
+            else:
+                self.isJump = False
+                self.jumpCount = 10

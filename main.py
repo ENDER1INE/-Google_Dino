@@ -23,7 +23,8 @@ def time_speed_up():  # <<< функция счета секунд
 
 
 dino_sprite = pygame.sprite.Group()
-Dino(load_image("dino_anim.png"), 5, 2, 20, 270, dino_sprite)
+drag = Dino(load_image("dino_anim.png"), 5, 2, 20, 270, dino_sprite)
+#drag_jump = Dino(load_image("1_2_string.png"), 5, 2, 20, 270, dino_sprite)
 
 objects_sprites = pygame.sprite.Group()
 Objects(objects_sprites)
@@ -36,23 +37,27 @@ background = pygame.transform.smoothscale(load_image('background.png'), (backgro
 
 pos_x = 0  # <<< Позиция старта
 speed = 3  # <<< Скорость движения
-
+isJump = False
+jumpCount = 10
 start_flag = False  # <<< Флаг старта движения
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
 running = True
 clock = pygame.time.Clock()
-fps = 30
+fps = 60
+count = 0
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
     # Начало движение (SPACE) <<<
     allKeys = pygame.key.get_pressed()
     if allKeys[pygame.K_SPACE]:
+        if count >= 1:
+            drag.isJump = True
         start_flag = True
+        count += 1
     if start_flag:
         pos_x -= speed
     # >>>
@@ -71,6 +76,7 @@ while running:
     objects_sprites.draw(screen)
     if start_flag:
         objects_sprites.update()
+        drag.jump()
         dino_sprite.update()
     pygame.display.flip()
     clock.tick(fps)
