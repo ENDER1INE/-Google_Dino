@@ -22,6 +22,7 @@ class Dino(pygame.sprite.Sprite):
         self.rect = self.rect.move(x, y)
         self.isJump = False
         self.jumpCount = 10
+        self.mask = pygame.mask.from_surface(self.image)
 
     def cut_sheet(self, sheet, columns, rows):
         self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
