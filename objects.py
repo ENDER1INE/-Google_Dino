@@ -43,6 +43,9 @@ class Stone(pygame.sprite.Sprite):
         if pygame.sprite.collide_mask(self, dino):
             print('end game')
             start_flag = False
+            boom = True
+            game_over = pygame.transform.scale(load_image('go.png'), (200, 100))
+            screen.blit(game_over, (380, 80))
 
         if self.rect.right < 0:
             self.kill()

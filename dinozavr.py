@@ -44,8 +44,8 @@ class Dino(pygame.sprite.Sprite):
             if self.jumpCount >= -10:
                 neg = 1
                 if self.jumpCount < 0:
-                    neg = - 1.2
-                self.rect.y -= self.jumpCount ** 2 * 0.1 * neg
+                    neg = -1.16
+                self.rect.y -= self.jumpCount ** 2 * 0.15 * neg
                 self.jumpCount -= 1
             else:
                 self.isJump = False

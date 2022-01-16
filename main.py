@@ -11,6 +11,7 @@ screen = pygame.display.set_mode(SIZE)
 running = True
 start_flag = False  # <<< Флаг старта движения
 isJump = False
+boom = False
 jumpCount = 10
 pos_x = 0  # <<< Позиция старта
 speed = 3  # <<< Скорость движения
@@ -49,7 +50,7 @@ pygame.init()
 
 
 while running:
-    clock.tick(60)
+    clock.tick(40)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -87,6 +88,9 @@ while running:
     if start_flag:
         dino_sprite.update()
         stones.update()
+    if boom:
+        drag.kill()
+        screen.blit(game_over, (380, 80))
 
     drag.jump()
 
