@@ -1,7 +1,6 @@
 import pygame
 import os
 import sys
-
 from dinozavr import Dino
 
 SIZE = WIDTH, HEIGHT = 1000, 400
@@ -16,6 +15,7 @@ def load_image(name, colorkey=None):
         sys.exit()
     image = pygame.image.load(fullname)
     return image
+
 
 screen_rect = (0, 0, 1000, 400)
 
@@ -38,10 +38,11 @@ class Stone(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
     def update(self):
-        dino = Dino(load_image("dino_anim.png"), 5, 2, 20, 270)
+        dino = Dino(load_image("dino_anim.png"), 5, 2, 20, 300)
         self.rect = self.rect.move(-3, 0)
         if pygame.sprite.collide_mask(self, dino):
             print('end game')
+            start_flag = False
 
         if self.rect.right < 0:
             self.kill()

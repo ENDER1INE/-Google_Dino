@@ -34,8 +34,10 @@ class Dino(pygame.sprite.Sprite):
                     frame_location, self.rect.size)))
 
     def update(self):
-        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
         self.image = self.frames[self.cur_frame]
+        self.elapsed = pygame.time.get_ticks()
+        if self.elapsed % 4 == 0:  # animate every half second
+            self.cur_frame = (self.cur_frame + 1) % len(self.frames)
 
     def jump(self):
         if self.isJump:
