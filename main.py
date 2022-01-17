@@ -14,8 +14,8 @@ isJump = False
 boom = False
 jumpCount = 10
 pos_x = 0  # <<< Позиция старта
-speed = 3  # <<< Скорость движения
-clock = pygame.time.Clock()
+speed = 4  # <<< Скорость движения
+clock_fps = pygame.time.Clock()
 fps = 60
 count = 0
 
@@ -47,10 +47,19 @@ background = pygame.transform.smoothscale(load_image('background.png'), (backgro
 # <<<
 
 pygame.init()
+pygame.font.init()
 
+count_score = 10
+font_1 = pygame.font.Font(None, 36)
 
 while running:
-    clock.tick(40)
+    if start_flag:
+        if count_score % 50 == 0:
+            speed += 1
+    text1 = font_1.render(str(count_score), True,
+                      (255, 255, 255))
+    print(speed)
+    clock_fps.tick(40)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -58,6 +67,7 @@ while running:
     # Начало движение (SPACE) <<<
     allKeys = pygame.key.get_pressed()
     if allKeys[pygame.K_SPACE]:
+        count_score += 10
         if count >= 1:
             drag.isJump = True
         start_flag = True
@@ -65,17 +75,6 @@ while running:
 
     if start_flag:
         pos_x -= speed
-
-    for s in stones:
-        s.movement = -3
-
-
-
-    # >>>
-    #  Увеличение скорости каждые 2 сек
-    #if time_speed_up() % 2 == 0:
-        #speed += 0.001
-    # >>>
 
     #  Движение заднего фона <<<
     coord_image_1 = pos_x % background_width
@@ -91,6 +90,9 @@ while running:
     if boom:
         drag.kill()
         screen.blit(game_over, (380, 80))
+
+    screen.blit(text1, (950, 10))
+    pygame.display.update()
 
     drag.jump()
 
