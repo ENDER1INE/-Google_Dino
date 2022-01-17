@@ -6,6 +6,7 @@ screen = pygame.display.set_mode(SIZE)
 running = True
 start_flag = False  # <<< Флаг старта движения
 isJump = False
+again = False
 boom = False
 jumpCount = 10
 pos_x = 0  # <<< Позиция старта

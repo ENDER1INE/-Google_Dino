@@ -22,7 +22,7 @@ def time_speed_up():  # <<< функция счета секунд
 
 
 stones = pygame.sprite.Group()
-Stone(stones)
+stone = Stone(stones)
 
 
 dino_sprite = pygame.sprite.Group()
@@ -61,6 +61,17 @@ while running:
             drag.isJump = True
         start_flag = True
         count += 1
+        if again:
+            screen.blit(background, (coord_image_1, 0)), screen.blit(background, (coord_image_2, 0))
+            drag.kill()
+            stone.kill()
+            stone = Stone(stones)
+            drag = Dino(load_image("dino_anim.png"), 5, 2, 20, 270, dino_sprite)
+            again = False
+            start_flag = True
+            boom = False
+            #pygame.display.update()
+
 
     if start_flag:
         pos_x -= speed
@@ -75,6 +86,7 @@ while running:
     if Stone.contact:
         start_flag = False
         boom = True
+        again = True
 
     if start_flag:
         dino_sprite.update()
@@ -82,7 +94,6 @@ while running:
         drag.jump()
 
     if boom:
-        drag.kill()
         end_game_page = load_image('go.png')
         end_game_page = pygame.transform.scale(end_game_page, (300, 150))
         screen.blit(end_game_page, (340, 100))
