@@ -1,6 +1,7 @@
-import pygame
 import os
 import sys
+
+from game_parts import *
 
 
 def load_image(name, colorkey=None):
@@ -23,6 +24,7 @@ class Dino(pygame.sprite.Sprite):
         self.isJump = False
         self.jumpCount = 10
         self.mask = pygame.mask.from_surface(self.image)
+        self.start_flag = start_flag
 
     def cut_sheet(self, sheet, columns, rows):
         self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,

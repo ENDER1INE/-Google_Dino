@@ -1,26 +1,11 @@
-import pygame
 import os
 import sys
 
+import pygame.transform
 
-from dinozavr import Dino
 from objects import Stone
-
-SIZE = WIDTH, HEIGHT = 1000, 400
-screen = pygame.display.set_mode(SIZE)
-running = True
-start_flag = False  # <<< Флаг старта движения
-isJump = False
-boom = False
-jumpCount = 10
-pos_x = 0  # <<< Позиция старта
-speed = 4  # <<< Скорость движения
-clock_fps = pygame.time.Clock()
-fps = 60
-count = 0
-
-stones = pygame.sprite.Group()
-Stone(stones)
+from dinozavr import Dino
+from game_parts import *
 
 
 def load_image(name, colorkey=None):
@@ -36,6 +21,10 @@ def time_speed_up():  # <<< функция счета секунд
     return int(pygame.time.get_ticks()) // 1000
 
 
+stones = pygame.sprite.Group()
+Stone(stones)
+
+
 dino_sprite = pygame.sprite.Group()
 drag = Dino(load_image("dino_anim.png"), 5, 2, 20, 270, dino_sprite)
 #  drag_jump = Dino(load_image("1_2_string.png"), 5, 2, 20, 270, dino_sprite)
@@ -49,22 +38,22 @@ background = pygame.transform.smoothscale(load_image('background.png'), (backgro
 pygame.init()
 pygame.font.init()
 
-count_score = 10
 font_1 = pygame.font.Font(None, 36)
 
 while running:
     if start_flag:
         if count_score % 50 == 0:
             speed += 1
+            count_score += 10
     text1 = font_1.render(str(count_score), True,
                       (255, 255, 255))
-    print(speed)
     clock_fps.tick(40)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     # Начало движение (SPACE) <<<
+
     allKeys = pygame.key.get_pressed()
     if allKeys[pygame.K_SPACE]:
         count_score += 10
@@ -83,18 +72,23 @@ while running:
     # >>>
     dino_sprite.draw(screen)
     stones.draw(screen)
+    if Stone.contact:
+        start_flag = False
+        boom = True
 
     if start_flag:
         dino_sprite.update()
         stones.update()
+        drag.jump()
+
     if boom:
         drag.kill()
-        screen.blit(game_over, (380, 80))
+        end_game_page = load_image('go.png')
+        end_game_page = pygame.transform.scale(end_game_page, (300, 150))
+        screen.blit(end_game_page, (340, 100))
 
     screen.blit(text1, (950, 10))
+
     pygame.display.update()
-
-    drag.jump()
-
     pygame.display.flip()
 pygame.quit()
