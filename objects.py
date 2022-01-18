@@ -1,7 +1,9 @@
 import os
 import sys
+import random
 
-from dinozavr import Dino
+import pygame.mask
+
 from game_parts import *
 
 
@@ -19,28 +21,22 @@ screen_rect = (0, 0, 1000, 400)
 
 class Stone(pygame.sprite.Sprite):
     stone = load_image("stone.png")
-    stone = pygame.transform.scale(stone, (40, 40))
+    stone = pygame.transform.scale(stone, (30, 30))
     spawn_stone = False
     contact = False
+    speed_object = 7
 
     def __init__(self, *group):
         super().__init__(*group)
         self.image = Stone.stone
         self.rect = self.stone.get_rect()
-        x, y = 1000, 305
-        self.rect.x, self.rect.y = x, y
+        self.rect.x, self.rect.y = random.randint(1000, 2200), 315
         self.mask = pygame.mask.from_surface(self.image)
 
     def draw(self):
         screen.blit(self.image, self.rect)
 
     def update(self):
-        dino = Dino(load_image("dino_anim.png"), 5, 2, 20, 300)
-        self.rect = self.rect.move(-speed, 0)
-        if pygame.sprite.collide_mask(self, dino):
-            print('end game')
-            Stone.contact = True
-            game_over = pygame.transform.scale(load_image('go.png'), (200, 100))
-            screen.blit(game_over, (380, 80))
+        self.rect = self.rect.move(-Stone.speed_object, 0)
         if self.rect.right < 0:
             self.kill()

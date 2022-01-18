@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 
 import pygame.transform
@@ -18,7 +19,7 @@ def load_image(name, colorkey=None):
 
 
 def time_speed_up():  # <<< функция счета секунд
-    return int(pygame.time.get_ticks()) // 1000
+    return pygame.time.get_ticks() // 1000
 
 
 stones = pygame.sprite.Group()
@@ -44,6 +45,7 @@ while running:
     if start_flag:
         if count_score % 50 == 0:
             speed += 1
+            Stone.speed_object += 1
             count_score += 10
     text1 = font_1.render(str(count_score), True,
                       (255, 255, 255))
@@ -56,7 +58,6 @@ while running:
 
     allKeys = pygame.key.get_pressed()
     if allKeys[pygame.K_SPACE]:
-        count_score += 10
         if count >= 1:
             drag.isJump = True
         start_flag = True
@@ -72,10 +73,17 @@ while running:
             boom = False
             #pygame.display.update()
 
+    if time_speed_up() not in list_second:
+        list_second.append(time_speed_up())
 
     if start_flag:
         pos_x -= speed
 
+    if len(list_second) % 5 == 0:
+        count_score += 10
+        Stone(stones)
+        list_second.append('space')
+    print(speed)
     #  Движение заднего фона <<<
     coord_image_1 = pos_x % background_width
     coord_image_2 = coord_image_1 - background_width if coord_image_1 > 0 else coord_image_1 + background_width
@@ -83,6 +91,7 @@ while running:
     # >>>
     dino_sprite.draw(screen)
     stones.draw(screen)
+
     if Stone.contact:
         start_flag = False
         boom = True
@@ -92,6 +101,10 @@ while running:
         dino_sprite.update()
         stones.update()
         drag.jump()
+
+    if pygame.sprite.spritecollideany(drag, stones):
+        print('end game', stone.mask)
+        Stone.contact = True
 
     if boom:
         end_game_page = load_image('go.png')

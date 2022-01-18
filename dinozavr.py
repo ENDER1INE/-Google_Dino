@@ -1,6 +1,8 @@
 import os
 import sys
 
+import pygame.mask
+
 from game_parts import *
 
 
@@ -48,6 +50,7 @@ class Dino(pygame.sprite.Sprite):
                 if self.jumpCount < 0:
                     neg = -1.16
                 self.rect.y -= self.jumpCount ** 2 * 0.2 * neg
+                self.rect.x += self.jumpCount * 0.2
                 self.jumpCount -= 1
             else:
                 self.isJump = False
