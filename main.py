@@ -62,16 +62,6 @@ while running:
             drag.isJump = True
         start_flag = True
         count += 1
-        if again:
-            screen.blit(background, (coord_image_1, 0)), screen.blit(background, (coord_image_2, 0))
-            drag.kill()
-            stone.kill()
-            stone = Stone(stones)
-            drag = Dino(load_image("dino_anim.png"), 5, 2, 20, 270, dino_sprite)
-            again = False
-            start_flag = True
-            boom = False
-            #pygame.display.update()
 
     if time_speed_up() not in list_second:
         list_second.append(time_speed_up())
@@ -83,7 +73,7 @@ while running:
         count_score += 10
         Stone(stones)
         list_second.append('space')
-    print(speed)
+
     #  Движение заднего фона <<<
     coord_image_1 = pos_x % background_width
     coord_image_2 = coord_image_1 - background_width if coord_image_1 > 0 else coord_image_1 + background_width
@@ -103,7 +93,6 @@ while running:
         drag.jump()
 
     if pygame.sprite.spritecollideany(drag, stones):
-        print('end game', stone.mask)
         Stone.contact = True
 
     if boom:

@@ -21,8 +21,9 @@ class Dino(pygame.sprite.Sprite):
         self.frames = []
         self.cut_sheet(sheet, columns, rows)
         self.cur_frame = 0
+        self.x, self.y = x, y
         self.image = self.frames[self.cur_frame]
-        self.rect = self.rect.move(x, y)
+        self.rect = pygame.rect.Rect(x + 200, y, 100, 70)
         self.isJump = False
         self.jumpCount = 10
         self.mask = pygame.mask.from_surface(self.image)
@@ -50,8 +51,8 @@ class Dino(pygame.sprite.Sprite):
                 if self.jumpCount < 0:
                     neg = -1.16
                 self.rect.y -= self.jumpCount ** 2 * 0.2 * neg
-                self.rect.x += self.jumpCount * 0.2
                 self.jumpCount -= 1
             else:
                 self.isJump = False
                 self.jumpCount = 10
+                self.rect.y = self.y

@@ -21,16 +21,17 @@ screen_rect = (0, 0, 1000, 400)
 
 class Stone(pygame.sprite.Sprite):
     stone = load_image("stone.png")
-    stone = pygame.transform.scale(stone, (30, 30))
+    stone = pygame.transform.scale(stone, (20, 35))
     spawn_stone = False
     contact = False
-    speed_object = 7
+    speed_object = 9
 
     def __init__(self, *group):
         super().__init__(*group)
         self.image = Stone.stone
-        self.rect = self.stone.get_rect()
-        self.rect.x, self.rect.y = random.randint(1000, 2200), 315
+        x_coord = random.randint(1000, 2200)
+        self.rect = pygame.rect.Rect(x_coord, 315, 20, 30)
+        self.rect.x, self.rect.y = x_coord, 315
         self.mask = pygame.mask.from_surface(self.image)
 
     def draw(self):
