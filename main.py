@@ -45,7 +45,9 @@ text1 = font_1.render(str(count_score), True,
                           (255, 255, 255))
 text2 = font_2.render(str(count_score), True,
                           (0, 0, 0))
-
+text3 = font_2.render(str(max(counts_records)), True,
+                              (0, 0, 0))
+f = open('records.txt', mode='w', encoding='utf8')
 while running:
     if start_flag:
         if count_score % 50 == 0:
@@ -127,13 +129,17 @@ while running:
         start_flag = False
         end_game_page = load_image('go.png')
         score = load_image('score.png')
+        best_sc = load_image('kubok.png')
         score = pygame.transform.scale(score, (100, 100))
         end_game_page = pygame.transform.scale(end_game_page, (300, 150))
         screen.blit(end_game_page, (350, 50))
         screen.blit(score, (420, 200))
         screen.blit(text2, (530, 227))
-        with open('records.txt', mode='w', encoding='utf8') as f1:
-            print(max(counts_records), file=f1)
+        screen.blit(best_sc, (420, 260))
+        print(count_score, file=f)
+        text3 = font_2.render(str(max(counts_records)), True,
+                              (0, 0, 0))
+        screen.blit(text3, (530, 264))
     screen.blit(text1, (950, 10))
     pygame.display.update()
     pygame.display.flip()
