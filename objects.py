@@ -19,7 +19,6 @@ def load_image(name, colorkey=None):
 screen_rect = (0, 0, 1000, 400)
 
 
-
 class Stone(pygame.sprite.Sprite):
     stone = load_image("stone.png")
     stone = pygame.transform.scale(stone, (20, 35))
@@ -52,7 +51,7 @@ class Cactus(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(*group)
         self.image = Cactus.cactus
-        self.rect = pygame.rect.Rect(900, 305, 20, 35)
+        self.rect = pygame.rect.Rect(random.randint(1000, 1500), 305, 20, 35)
         self.mask = pygame.mask.from_surface(self.image)
 
     def draw(self):

@@ -47,6 +47,7 @@ while running:
         if count_score % 50 == 0:
             speed += 1
             Stone.speed_object += 1
+            Cactus.speed_object += 1
             count_score += 10
     text1 = font_1.render(str(count_score), True,
                       (255, 255, 255))
@@ -68,14 +69,14 @@ while running:
         list_second.append(time_speed_up())
 
     if start_flag:
-        pos_x -= speed
+        if not game_over:
+            pos_x -= speed
 
     if len(list_second) % 5 == 0:
         count_score += 10
-        list_objects = [Stone(objects), Cactus(objects)]
-        currect_object = random.randint(0, 1)
-        list_objects[currect_object]
         list_second.append('space')
+        Cactus(objects) if random.randint(1, 2) == 1 else Stone(objects)
+
 
     #  Движение заднего фона <<<
     coord_image_1 = pos_x % background_width
@@ -89,6 +90,22 @@ while running:
         start_flag = False
         boom = True
         again = True
+        game_over = True
+
+    if game_over:
+        if allKeys[pygame.K_SPACE]:
+            objects.remove(objects)
+            pos_x = 0
+            game_over = False
+            Stone.contact = False
+            start_flag = True
+            boom = False
+            count_score = 10
+            list_second.clear()
+            speed = 9
+            Stone.speed_object = 9
+            Cactus.speed_object = 9
+    print(speed, Cactus.speed_object, Stone.speed_object)
 
     if start_flag:
         dino_sprite.update()
