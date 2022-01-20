@@ -94,6 +94,7 @@ while running:
 
     if game_over:
         if allKeys[pygame.K_SPACE]:
+            pygame.time.delay(500)
             objects.remove(objects)
             pos_x = 0
             game_over = False
