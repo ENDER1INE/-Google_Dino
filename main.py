@@ -4,7 +4,7 @@ import sys
 
 import pygame.transform
 
-from objects import Stone
+from objects import Stone, Cactus
 from dinozavr import Dino
 from game_parts import *
 
@@ -22,8 +22,9 @@ def time_speed_up():  # <<< функция счета секунд
     return pygame.time.get_ticks() // 1000
 
 
-stones = pygame.sprite.Group()
-stone = Stone(stones)
+objects = pygame.sprite.Group()
+stone = Stone(objects)
+cactus = Cactus(objects)
 
 
 dino_sprite = pygame.sprite.Group()
@@ -71,7 +72,9 @@ while running:
 
     if len(list_second) % 5 == 0:
         count_score += 10
-        Stone(stones)
+        list_objects = [Stone(objects), Cactus(objects)]
+        currect_object = random.randint(0, 1)
+        list_objects[currect_object]
         list_second.append('space')
 
     #  Движение заднего фона <<<
@@ -80,7 +83,7 @@ while running:
     screen.blit(background, (coord_image_1, 0)), screen.blit(background, (coord_image_2, 0))
     # >>>
     dino_sprite.draw(screen)
-    stones.draw(screen)
+    objects.draw(screen)
 
     if Stone.contact:
         start_flag = False
@@ -89,10 +92,10 @@ while running:
 
     if start_flag:
         dino_sprite.update()
-        stones.update()
+        objects.update()
         drag.jump()
 
-    if pygame.sprite.spritecollideany(drag, stones):
+    if pygame.sprite.spritecollideany(drag, objects):
         Stone.contact = True
 
     if boom:
