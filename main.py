@@ -29,7 +29,6 @@ cactus = Cactus(objects)
 
 dino_sprite = pygame.sprite.Group()
 drag = Dino(load_image("dino_anim.png"), 5, 2, 20, 270, dino_sprite)
-#  drag_jump = Dino(load_image("1_2_string.png"), 5, 2, 20, 270, dino_sprite)
 
 
 # <<< background
@@ -41,6 +40,11 @@ pygame.init()
 pygame.font.init()
 
 font_1 = pygame.font.Font(None, 36)
+font_2 = pygame.font.Font(None, 50)
+text1 = font_1.render(str(count_score), True,
+                          (255, 255, 255))
+text2 = font_2.render(str(count_score), True,
+                          (0, 0, 0))
 
 while running:
     if start_flag:
@@ -49,8 +53,10 @@ while running:
             Stone.speed_object += 1
             Cactus.speed_object += 1
             count_score += 10
-    text1 = font_1.render(str(count_score), True,
-                      (255, 255, 255))
+            text1 = font_1.render(str(count_score), True,
+                                  (255, 255, 255))
+            text2 = font_2.render(str(count_score), True,
+                                  (0, 0, 0))
     clock_fps.tick(40)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -106,7 +112,7 @@ while running:
             speed = 9
             Stone.speed_object = 9
             Cactus.speed_object = 9
-    print(speed, Cactus.speed_object, Stone.speed_object)
+    #print(speed, Cactus.speed_object, Stone.speed_object)
 
     if start_flag:
         dino_sprite.update()
@@ -116,13 +122,20 @@ while running:
     if pygame.sprite.spritecollideany(drag, objects):
         Stone.contact = True
 
+
     if boom:
+        start_flag = False
         end_game_page = load_image('go.png')
+        score = load_image('score.png')
+        score = pygame.transform.scale(score, (100, 100))
         end_game_page = pygame.transform.scale(end_game_page, (300, 150))
-        screen.blit(end_game_page, (340, 100))
+        screen.blit(end_game_page, (350, 50))
+        screen.blit(score, (420, 200))
+        screen.blit(text2, (530, 227))
+        with open('records.txt', mode='w', encoding='utf8') as f1:
+            print(text1, file=f1)
 
     screen.blit(text1, (950, 10))
-
     pygame.display.update()
     pygame.display.flip()
 pygame.quit()
