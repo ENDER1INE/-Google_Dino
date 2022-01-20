@@ -16,4 +16,5 @@ fps = 60
 count = 0
 count_score = 10
 list_second = []
+counts_records = [0]
 game_over = False

@@ -53,10 +53,10 @@ while running:
             Stone.speed_object += 1
             Cactus.speed_object += 1
             count_score += 10
-            text1 = font_1.render(str(count_score), True,
-                                  (255, 255, 255))
-            text2 = font_2.render(str(count_score), True,
-                                  (0, 0, 0))
+        text1 = font_1.render(str(count_score - 10), True,
+                              (255, 255, 255))
+        text2 = font_2.render(str(count_score - 10), True,
+                              (0, 0, 0))
     clock_fps.tick(40)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -101,6 +101,7 @@ while running:
     if game_over:
         if allKeys[pygame.K_SPACE]:
             pygame.time.delay(500)
+            counts_records.append(count_score - 10)
             objects.remove(objects)
             pos_x = 0
             game_over = False
@@ -122,7 +123,6 @@ while running:
     if pygame.sprite.spritecollideany(drag, objects):
         Stone.contact = True
 
-
     if boom:
         start_flag = False
         end_game_page = load_image('go.png')
@@ -133,8 +133,7 @@ while running:
         screen.blit(score, (420, 200))
         screen.blit(text2, (530, 227))
         with open('records.txt', mode='w', encoding='utf8') as f1:
-            print(text1, file=f1)
-
+            print(max(counts_records), file=f1)
     screen.blit(text1, (950, 10))
     pygame.display.update()
     pygame.display.flip()
