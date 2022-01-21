@@ -17,4 +17,6 @@ count = 0
 count_score = 10
 list_second = []
 counts_records = [0]
+start_screen_flag = True
 game_over = False
+list_coords_spawn = []
