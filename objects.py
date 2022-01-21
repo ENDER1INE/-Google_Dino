@@ -30,6 +30,10 @@ class Stone(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Stone.stone
         x_coord = random.randint(1000, 2200)
+        coords.append(x_coord)
+        if x_coord < coords[-1] + 200:
+            x_coord = random.randint(1000, 2200)
+            coords.append(x_coord)
         self.rect = pygame.rect.Rect(x_coord, 315, 20, 30)
         self.rect.x, self.rect.y = x_coord, 315
         self.mask = pygame.mask.from_surface(self.image)

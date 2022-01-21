@@ -47,8 +47,35 @@ text2 = font_2.render(str(count_score), True,
                           (0, 0, 0))
 text3 = font_2.render(str(max(counts_records)), True,
                               (0, 0, 0))
+text4 = font_1.render('Name:', True,
+                              (0, 0, 0))
+input_box = pygame.Rect(760, 50, 140, 32)
 f = open('records.txt', mode='w', encoding='utf8')
 while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.VIDEOEXPOSE:
+            start_flag = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if input_box.collidepoint(event.pos):
+                active = not active
+            else:
+                active = False
+            color = color_active if active else color_inactive
+        if event.type == pygame.KEYDOWN:
+            if active:
+                if event.key == pygame.K_RETURN:
+                    print(f'{text}: {max(counts_records)}', file=f)
+                    #f = open('records.txt', mode='r', encoding='utf8')
+                    #d = f.readlines()
+                    #print(d)
+                    print(text)
+                    text = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    text = text[:-1]
+                else:
+                    text += event.unicode
     if start_flag:
         if count_score % 50 == 0:
             speed += 1
@@ -60,9 +87,6 @@ while running:
         text2 = font_2.render(str(count_score - 10), True,
                               (0, 0, 0))
     clock_fps.tick(40)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
 
     # Начало движение (SPACE) <<<
 
@@ -115,7 +139,6 @@ while running:
             speed = 9
             Stone.speed_object = 9
             Cactus.speed_object = 9
-    #print(speed, Cactus.speed_object, Stone.speed_object)
 
     if start_flag:
         dino_sprite.update()
@@ -136,10 +159,14 @@ while running:
         screen.blit(score, (420, 200))
         screen.blit(text2, (530, 227))
         screen.blit(best_sc, (420, 260))
-        print(count_score, file=f)
         text3 = font_2.render(str(max(counts_records)), True,
                               (0, 0, 0))
         screen.blit(text3, (530, 264))
+        pygame.draw.rect(screen, color,  input_box, 2)
+        screen.blit(text4, (680, 55))
+        txt = font_1.render(text, True, 'black')
+        input_box.w = max(200, txt.get_width() + 10)
+        screen.blit(txt, (input_box.x + 5, input_box.y + 5))
     screen.blit(text1, (950, 10))
     pygame.display.update()
     pygame.display.flip()

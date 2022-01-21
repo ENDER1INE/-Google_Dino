@@ -18,3 +18,10 @@ count_score = 10
 list_second = []
 counts_records = [0]
 game_over = False
+coords = []
+active = False
+color_inactive = pygame.Color('black')
+color_active = pygame.Color('blue')
+color = color_inactive
+text = ''
+
