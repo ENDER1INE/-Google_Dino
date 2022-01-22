@@ -60,10 +60,10 @@ text3 = font_2.render(str(max(counts_records)), True,
                               (0, 0, 0))
 text4 = font_1.render('Name:', True,
                               (0, 0, 0))
+text5 = font_1.render(d, True,
+                              (0, 0, 0))
 input_box = pygame.Rect(760, 50, 140, 32)
 f = open('records.txt', mode='w', encoding='utf8')
-
-
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -79,12 +79,15 @@ while running:
         if event.type == pygame.KEYDOWN:
             if active:
                 if event.key == pygame.K_RETURN:
-                    print(f'{text}: {max(counts_records)}', file=f)
-                    #f = open('records.txt', mode='r', encoding='utf8')
-                    #d = f.readlines()
-                    #print(d)
-                    print(text)
+                    f = open('records.txt', mode='w', encoding='utf8')
+                    print(f'{text}: {count_score - 10}', file=f)
+                    f = open('records.txt', mode='r')
+                    d = d + f.read()
+                    text5 = font_1.render(d, True,
+                                          (0, 0, 0))
                     text = ''
+                    active = False
+                    color = color_inactive
                 elif event.key == pygame.K_BACKSPACE:
                     text = text[:-1]
                 else:
@@ -177,19 +180,19 @@ while running:
         screen.blit(end_game_page, (350, 50))
         screen.blit(score, (420, 200))
         screen.blit(text2, (530, 227))
+        screen.blit(text5, (680, 100))
         screen.blit(best_sc, (420, 260))
         screen.blit(peso, (300, 360))
-        print(count_score - 10, file=f)
         text3 = font_2.render(str(max(counts_records)), True,
                               (0, 0, 0))
         screen.blit(text3, (530, 264))
-    if not start_screen_flag:
-        screen.blit(text1, (950, 10))
-        pygame.draw.rect(screen, color,  input_box, 2)
+        pygame.draw.rect(screen, color, input_box, 2)
         screen.blit(text4, (680, 55))
         txt = font_1.render(text, True, 'black')
         input_box.w = max(200, txt.get_width() + 10)
         screen.blit(txt, (input_box.x + 5, input_box.y + 5))
+    if not start_screen_flag:
+        screen.blit(text1, (950, 10))
     screen.blit(text1, (950, 10))
     pygame.display.update()
     pygame.display.flip()
