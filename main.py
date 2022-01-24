@@ -60,8 +60,6 @@ text3 = font_2.render(str(max(counts_records)), True,
                               (0, 0, 0))
 text4 = font_1.render('Name:', True,
                               (0, 0, 0))
-text5 = font_1.render(d, True,
-                              (0, 0, 0))
 input_box = pygame.Rect(760, 50, 140, 32)
 f = open('records.txt', mode='w', encoding='utf8')
 while running:
@@ -81,10 +79,6 @@ while running:
                 if event.key == pygame.K_RETURN:
                     f = open('records.txt', mode='w', encoding='utf8')
                     print(f'{text}: {count_score - 10}', file=f)
-                    f = open('records.txt', mode='r')
-                    d = d + f.read()
-                    text5 = font_1.render(d, True,
-                                          (0, 0, 0))
                     text = ''
                     active = False
                     color = color_inactive
@@ -180,7 +174,6 @@ while running:
         screen.blit(end_game_page, (350, 50))
         screen.blit(score, (420, 200))
         screen.blit(text2, (530, 227))
-        screen.blit(text5, (680, 100))
         screen.blit(best_sc, (420, 260))
         screen.blit(peso, (300, 360))
         text3 = font_2.render(str(max(counts_records)), True,

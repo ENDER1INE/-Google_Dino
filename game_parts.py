@@ -25,5 +25,4 @@ color_inactive = pygame.Color('black')
 color_active = pygame.Color('blue')
 color = color_inactive
 text = ''
-d = ''
 list_coords_spawn = []
