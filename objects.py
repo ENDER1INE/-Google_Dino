@@ -1,6 +1,5 @@
 import os
 import sys
-import random
 
 import pygame.mask
 
@@ -16,10 +15,6 @@ def load_image(name, colorkey=None):
     return image
 
 
-def random_x_coord(self):
-    return random.randint(1000, 2200)
-
-
 screen_rect = (0, 0, 1000, 400)
 
 
@@ -33,7 +28,7 @@ class Stone(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(*group)
         self.image = Stone.stone
-        x_coord = random_x_coord(self)
+        x_coord = 1000
         list_coords_spawn.append(x_coord)
         self.rect = pygame.rect.Rect(x_coord, 315, 20, 30)
         self.rect.x, self.rect.y = x_coord, 315
@@ -56,7 +51,7 @@ class Cactus(pygame.sprite.Sprite):
     def __init__(self, *group):
         super().__init__(*group)
         self.image = Cactus.cactus
-        x_coord = random.randint(1000, 1500)
+        x_coord = 1400
         list_coords_spawn.append(x_coord)
         self.rect = pygame.rect.Rect(x_coord, 305, 20, 35)
         self.mask = pygame.mask.from_surface(self.image)

@@ -138,7 +138,7 @@ while running:
         start_screen_sprite.draw(screen)
 
     if game_over:
-        if allKeys[pygame.K_SPACE]:
+        if allKeys[pygame.K_RETURN]:
             pygame.time.delay(500)
             counts_records.append(count_score - 10)
             objects.remove(objects)
