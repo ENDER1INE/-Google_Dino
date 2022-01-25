@@ -82,6 +82,7 @@ while running:
                     text = ''
                     active = False
                     color = color_inactive
+                    start_screen_flag = True
                 elif event.key == pygame.K_BACKSPACE:
                     text = text[:-1]
                 else:
@@ -137,8 +138,10 @@ while running:
     if start_screen_flag:
         start_screen_sprite.draw(screen)
 
+    print(start_screen_flag)
+
     if game_over:
-        if allKeys[pygame.K_SPACE]:
+        if allKeys[pygame.K_RETURN]:
             pygame.time.delay(500)
             counts_records.append(count_score - 10)
             objects.remove(objects)
